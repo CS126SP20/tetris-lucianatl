@@ -4,13 +4,14 @@
 
 #ifndef FINALPROJECT_PIECES_H
 #define FINALPROJECT_PIECES_H
+#pragma once
 
 // source: http://javilop.com/gamedev/tetris-tutorial-in-c-platform-independent-focused-in-game-logic-for-beginners/
 
 #include <map>
 #include <vector>
 
-namespace pieces {
+namespace tetris {
     using std::vector;
 
 
@@ -241,7 +242,7 @@ namespace pieces {
             };
 
     // Displacement of the piece to the position where it is first drawn in the board when it is created
-    int mPiecesInitialPosition  [7 /*kind */ ][4 /* r2otation */ ][2 /* position */] =
+    int piece_displacement_matrices[7 /*kind */ ][4 /* r2otation */ ][2 /* position */] =
             {
     /* Square */
                     {

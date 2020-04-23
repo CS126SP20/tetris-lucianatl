@@ -9,6 +9,13 @@
 
 namespace myapp {
 
+    // used to describe the state of the game
+    enum class GameState {
+        kPlaying,
+        kGameOver,
+        kGamePaused
+    };
+
 class MyApp : public cinder::app::App {
  public:
   MyApp();

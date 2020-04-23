@@ -5,7 +5,7 @@
 #include <map>
 #include <vector>
 
-namespace pieces {
+namespace tetris {
     int Pieces::GetBlockType (char type, int rotation, int x, int y) {
         switch (type) {
             case 'i':
@@ -25,12 +25,12 @@ namespace pieces {
         }
     }
 
-    int Pieces::GetXInitialPosition (int pPiece, int pRotation) {
-        return mPiecesInitialPosition [pPiece][pRotation][0];
+    int Pieces::GetXInitialPosition (int type, int rotation) {
+        return piece_displacement_matrices[type][rotation][0];
     }
 
-    int Pieces::GetYInitialPosition (int pPiece, int pRotation)  {
-        return mPiecesInitialPosition [pPiece][pRotation][1];
+    int Pieces::GetYInitialPosition (int type, int rotation)  {
+        return piece_displacement_matrices[type][rotation][1];
     }
 
-}  // namespace mylibrary
+}  // namespace tetris

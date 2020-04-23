@@ -32,7 +32,7 @@ void MyApp::setup() {
 void MyApp::update() { }
 
 void MyApp::draw() {
-    cinder::gl::clear(cinder::Color(84. / 255., 166. / 255, 1));
+    cinder::gl::clear(cinder::Color(84 / 255., 166. / 255, 1));
     cinder::gl::drawSolidCircle(cinder::vec2(getWindowCenter()), mRadius);
 
     gui->draw();
