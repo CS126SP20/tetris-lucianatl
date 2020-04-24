@@ -1,6 +1,6 @@
 // Copyright (c) 2020 Luciana Toledo-Lopez. All rights reserved.
 
-#include "pieces.h"
+#include "mylibrary/pieces.h"
 
 #include <map>
 #include <vector>
