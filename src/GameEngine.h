@@ -11,12 +11,11 @@ namespace tetris {
 
     class GameEngine {
     public:
+        /// constructor, sets board peices to instance variables and sets screen height to namespace variable
+        GameEngine(Board board, Pieces pieces, int screen_height);
 
-
-        GameEngine(Board *pBoard, Pieces *pPieces, int pScreenHeight);
-
-        void DrawScene ();
-        void CreateNewPiece ();
+        void DrawScene();
+        void CreateNewPiece();
         /// x position fo the falling piece
         int falling_piece_x;
         /// y position of the falling piece
@@ -27,16 +26,22 @@ namespace tetris {
         int falling_piece_rotation;
 
     private:
-        int mNextPosX, mNextPosY;       // Position of the next piece
-        int mNextPiece, mNextRotation;  // Kind and rotation of the next piece
+        /// x postion of the next piece
+        int next_piece_x;
+        ///y position of the next piece
+        int next_piece_y;
+        /// type of the next piece
+        char next_piece_type;
+        /// rotation of the next piece
+        int next_piece_rotation;  // Kind and rotation of the next piece
 
-        Board *mBoard;
-        Pieces *mPieces;
+        Board board;
+        Pieces pieces;
 
-        int GetRand (int pA, int pB);
+        int GetRandom(int a, int b);
         void InitGame();
-        void DrawPiece (int pX, int pY, int pPiece, int pRotation);
-        void DrawBoard ();
+        void DrawPiece(int x, int y, int piece, int rotation);
+        void DrawBoard();
     };
 
 }

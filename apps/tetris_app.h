@@ -24,7 +24,11 @@ class MyApp : public cinder::app::App {
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
  private:
+    void DrawFallingPiece() const;
+    void DrawBoard() const;
+    void DrawNextPiece() const;
   float mRadius;
+  const int tile_size_ = 25;
   pretzel::PretzelGuiRef gui;
 
 };

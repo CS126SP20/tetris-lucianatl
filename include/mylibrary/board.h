@@ -7,6 +7,10 @@
 #include "mylibrary/pieces.h"
 
 namespace tetris {
+
+    static int kScreenHeight;
+    static const int kBlockSize = 16;
+
     class Board {
     public:
         Board(Pieces pieces, int screen_height);
@@ -25,9 +29,8 @@ namespace tetris {
             filled
         };
 
-        // size of the tetris enviroment border
+        // size of the tetris environment border
         const int kBoardLineWidth = 6;
-        const int kBlockSize = 16;
         // Center position of the board from the left of the screen
         const int kBoardMiddle = 320;
         // board width in blocks
@@ -45,7 +48,7 @@ namespace tetris {
         // board
         Pieces pieces = Pieces();
 
-        int kScreenHeight;
+
 
         /** fills board with frees**/
         void FillBoard();

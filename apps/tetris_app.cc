@@ -1,8 +1,9 @@
 // Copyright (c) 2020 [Your Name]. All rights reserved.
 
-#include "my_app.h"
+#include "tetris_app.h"
 
 #include <cinder/app/App.h>
+#include <mylibrary/board.h>
 #include "pretzel/PretzelGui.h"
 
 
@@ -38,6 +39,17 @@ void MyApp::draw() {
     gui->draw();
 }
 
+void MyApp::DrawBoard() const {
+
+}
+
+void MyApp::DrawFallingPiece() const {
+
+}
+
+void MyApp::DrawNextPiece() const {
+
+}
 void MyApp::keyDown(KeyEvent event) { }
 
 }  // namespace myapp
