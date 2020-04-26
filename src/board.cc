@@ -6,6 +6,7 @@
 
 
 namespace tetris {
+
     Board::Board(Pieces pieces, int screen_height) {
         this->pieces = pieces;
         kScreenHeight = screen_height;
@@ -114,5 +115,7 @@ namespace tetris {
     int Board::GetYPosInPixels (int y_position) {
         return ((kScreenHeight - (kBlockSize * kBoardHeight)) + (y_position * kBlockSize));
     }
+
+    Board::Board() {}
 
 }

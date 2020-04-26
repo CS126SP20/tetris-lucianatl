@@ -9,6 +9,8 @@
 
 namespace tetris {
 
+    int kScreenHeight;
+
     class GameEngine {
     public:
         /// constructor, sets board peices to instance variables and sets screen height to namespace variable
@@ -33,12 +35,14 @@ namespace tetris {
         /// type of the next piece
         char next_piece_type;
         /// rotation of the next piece
-        int next_piece_rotation;  // Kind and rotation of the next piece
+        int next_piece_rotation;
 
+        char piece_type_array[6] = {'i', 'o', 'j', 'l', 'n', 't'};
+        
         Board board;
         Pieces pieces;
 
-        int GetRandom(int a, int b);
+        int GetRandomInt(int min, int max);
         void InitGame();
         void DrawPiece(int x, int y, int piece, int rotation);
         void DrawBoard();

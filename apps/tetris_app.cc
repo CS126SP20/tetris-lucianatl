@@ -40,6 +40,8 @@ void MyApp::draw() {
 }
 
 void MyApp::DrawBoard() const {
+    // draw rectangles that limit the board
+    // draw already placed blocks
 
 }
 
