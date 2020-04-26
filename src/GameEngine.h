@@ -16,6 +16,8 @@ namespace tetris {
         /// constructor, sets board peices to instance variables and sets screen height to namespace variable
         GameEngine(Board board, Pieces pieces, int screen_height);
 
+        GameEngine();
+
         void DrawScene();
         void CreateNewPiece();
         /// x position fo the falling piece
@@ -26,6 +28,9 @@ namespace tetris {
         char falling_piece_type;
         /// rotation of the piece that is falling
         int falling_piece_rotation;
+
+        Board board;
+        Pieces pieces;
 
     private:
         /// x postion of the next piece
@@ -39,8 +44,7 @@ namespace tetris {
 
         char piece_type_array[6] = {'i', 'o', 'j', 'l', 'n', 't'};
         
-        Board board;
-        Pieces pieces;
+
 
         int GetRandomInt(int min, int max);
         void InitGame();

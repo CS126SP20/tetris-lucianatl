@@ -3,6 +3,7 @@
 //
 
 #include "mylibrary/board.h"
+#include "GameEngine.h"
 
 
 namespace tetris {
@@ -20,8 +21,6 @@ namespace tetris {
             }
         }
     }
-
-
 
     // double check
     void Board::StorePiece(int x, int y, char piece, int rotation) {
@@ -97,13 +96,11 @@ namespace tetris {
                         (!IsFreeBlock(i_board, j_board))) {
                         return false;
                     }
-
                 }
                 j_matrix++;
             }
             i_matrix++;
         }
-
         // No collision
         return true;
     }

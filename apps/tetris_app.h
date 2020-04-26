@@ -5,6 +5,7 @@
 
 #include <cinder/app/App.h>
 #include <pretzel/PretzelGui.h>
+#include "../src/GameEngine.h"
 
 
 namespace myapp {
@@ -30,6 +31,9 @@ class MyApp : public cinder::app::App {
   float mRadius;
   const int tile_size_ = 25;
   pretzel::PretzelGuiRef gui;
+  tetris::GameEngine game_engine;
+  int kNumRotations = 4;
+
 
 };
 

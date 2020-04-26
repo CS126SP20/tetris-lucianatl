@@ -1,17 +1,25 @@
-// Copyright (c) 2020 [Your Name]. All rights reserved.
+// Copyright (c) 2020 Luciana Toledo-Lopez. All rights reserved.
 
 #include "tetris_app.h"
 
 #include <cinder/app/App.h>
 #include <mylibrary/board.h>
-#include "pretzel/PretzelGui.h"
+#include <cinder/gl/draw.h>
+#include <cinder/gl/wrapper.h>
+//#include "pretzel/PretzelGui.h"
+#include "../../../blocks/PretzelGui/src/pretzel/PretzelGui.h"
 
 
 namespace myapp {
+    using namespace tetris;
 
 using cinder::app::KeyEvent;
 
 MyApp::MyApp() {
+
+    Pieces pieces = Pieces();
+    Board board = Board(pieces, kScreenHeight);
+    game_engine = GameEngine(board, pieces, kScreenHeight);
 
 }
 
@@ -52,6 +60,59 @@ void MyApp::DrawFallingPiece() const {
 void MyApp::DrawNextPiece() const {
 
 }
-void MyApp::keyDown(KeyEvent event) { }
+void MyApp::keyDown(KeyEvent event) {
+    switch (event.getCode()) {
+        case KeyEvent::KEY_UP:
+        case KeyEvent::KEY_k:
+        case KeyEvent::KEY_w: {
+            break;
+        }
+        case KeyEvent::KEY_DOWN:
+        case KeyEvent::KEY_j:
+        case KeyEvent::KEY_s: {
+            if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x, game_engine.falling_piece_y + 1,
+                    game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
+                game_engine.falling_piece_y++;
+            }
+            break;
+        }
+        case KeyEvent::KEY_LEFT:
+        case KeyEvent::KEY_h:
+        case KeyEvent::KEY_a: {
+            if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x - 1, game_engine.falling_piece_y,
+                                         game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
+                game_engine.falling_piece_x--;
+            }
+            break;
+        }
+        case KeyEvent::KEY_RIGHT:
+        case KeyEvent::KEY_l:
+        case KeyEvent::KEY_d: {
+            if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x + 1, game_engine.falling_piece_y,
+                    game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
+                game_engine.falling_piece_x++;
+            }
+            break;
+        }
+        case KeyEvent::KEY_p: {
+            break;
+        }
+        case KeyEvent::KEY_r: {
+
+            break;
+        }
+        case KeyEvent::KEY_q: {
+            break;
+        }
+        case KeyEvent::KEY_SPACE: {
+            if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x, game_engine.falling_piece_y,
+                    game_engine.falling_piece_type, (game_engine.falling_piece_rotation + 1) % kNumRotations))
+                game_engine.falling_piece_rotation = (game_engine.falling_piece_rotation + 1) % kNumRotations;
+            break;
+        }
+
+        }
+    }
+}
 
 }  // namespace myapp

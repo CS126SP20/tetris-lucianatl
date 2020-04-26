@@ -13,10 +13,6 @@ namespace  tetris {
         this->pieces = pieces;
         kScreenHeight = screen_height;
 
-
-        // Init random numbers
-        srand ((unsigned int) time(NULL));
-
         // First piece
         falling_piece_type = piece_type_array[GetRandomInt(0, 6)];
         falling_piece_rotation = GetRandomInt(0, 3);
@@ -45,5 +41,7 @@ namespace  tetris {
         next_piece_type = piece_type_array[GetRandomInt(0, 6)];
         next_piece_rotation = GetRandomInt(0, 3);
     }
+
+    GameEngine::GameEngine() {}
 
 }
