@@ -11,15 +11,14 @@
 
 
 namespace myapp {
-    using namespace tetris;
+    //using namespace tetris;
 
 using cinder::app::KeyEvent;
 
 MyApp::MyApp() {
-
-    Pieces pieces = Pieces();
-    Board board = Board(pieces, kScreenHeight);
-    game_engine = GameEngine(board, pieces, kScreenHeight);
+    tetris::Board board = tetris::Board(tetris::kScreenHeight);
+    game_engine = tetris::GameEngine(board, tetris::kScreenHeight);
+    state_ = GameState::kPlaying;
 
 }
 
@@ -36,9 +35,16 @@ void MyApp::setup() {
 
     ci::gl::enableAlphaBlending();
 
+    // start music, start clock?
+
 }
 
-void MyApp::update() { }
+void MyApp::update() {
+    if (state_ == GameState::kGameOver) {
+        //stop music?
+        return;
+    }
+}
 
 void MyApp::draw() {
     cinder::gl::clear(cinder::Color(84 / 255., 166. / 255, 1));
@@ -115,4 +121,4 @@ void MyApp::keyDown(KeyEvent event) {
     }
 }
 
-}  // namespace myapp
+  // namespace myapp

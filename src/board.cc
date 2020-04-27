@@ -8,11 +8,12 @@
 
 namespace tetris {
 
-    Board::Board(Pieces pieces, int screen_height) {
-        this->pieces = pieces;
+    Board::Board(int screen_height) {
         kScreenHeight = screen_height;
         FillBoard();
     }
+
+    Board::Board() {}
 
     void Board::FillBoard() {
         for (int i = 0; i < kBoardWidth; i++) {
@@ -113,6 +114,6 @@ namespace tetris {
         return ((kScreenHeight - (kBlockSize * kBoardHeight)) + (y_position * kBlockSize));
     }
 
-    Board::Board() {}
+
 
 }

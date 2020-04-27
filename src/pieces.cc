@@ -23,6 +23,7 @@ namespace tetris {
             default:
                 break;
         }
+
     }
 
     int Pieces::GetXInitialPosition (int type, int rotation) {

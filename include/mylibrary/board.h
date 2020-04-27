@@ -29,7 +29,7 @@ namespace tetris {
 
     class Board {
     public:
-        Board(Pieces pieces, int screen_height);
+        Board(int screen_height);
 
         Board();
 
@@ -41,6 +41,7 @@ namespace tetris {
         void StorePiece(int x, int y, char piece, int rotation);
         void DeletePossibleLines();
         bool IsGameOver();
+        Pieces pieces = Pieces();
 
     private:
         enum {
@@ -48,14 +49,15 @@ namespace tetris {
             filled
         };
 
-        int board[kBoardWidth][kBoardHeight]; // Board that contains the pieces
-        // board
-        Pieces pieces = Pieces();
+        /// Board that contains the pieces
+        int board[kBoardWidth][kBoardHeight];
+
+
 
         /** fills board with frees**/
         void FillBoard();
 
-        void DeleteLine (int y);
+        void DeleteLine(int y);
 
     };
 }

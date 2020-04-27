@@ -33,6 +33,7 @@ class MyApp : public cinder::app::App {
   pretzel::PretzelGuiRef gui;
   tetris::GameEngine game_engine;
   int kNumRotations = 4;
+  GameState state_;
 
 
 };
