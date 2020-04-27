@@ -2,15 +2,15 @@
 // Created by Luciana Toledo-Lopez on 4/24/20.
 //
 
-#include "GameEngine.h"
+#include "mylibrary/GameEngine.h"
 #include "mylibrary/board.h"
 
 namespace  tetris {
 
 
-    GameEngine::GameEngine(Board board, int screen_height) {
+    GameEngine::GameEngine(Board board) {
         this->board = board;
-        kScreenHeight = screen_height;
+
 
         // First piece
         falling_piece_type = piece_type_array[GetRandomInt(0, 6)];

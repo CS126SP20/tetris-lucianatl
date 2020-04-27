@@ -52,6 +52,8 @@ namespace tetris {
         /// Board that contains the pieces
         int board[kBoardWidth][kBoardHeight];
 
+        int kScreenHeight;
+
 
 
         /** fills board with frees**/
