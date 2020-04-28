@@ -41,6 +41,7 @@ namespace tetris {
         void StorePiece(int x, int y, char piece, int rotation);
         void DeletePossibleLines();
         bool IsGameOver();
+        int GetScreenHeight() const;
         Pieces pieces = Pieces();
 
     private:

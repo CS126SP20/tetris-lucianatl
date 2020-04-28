@@ -15,6 +15,10 @@ namespace tetris {
 
     Board::Board() {}
 
+    int Board::GetScreenHeight() const {
+        return kScreenHeight;
+    }
+
     void Board::FillBoard() {
         for (int i = 0; i < kBoardWidth; i++) {
             for (int j = 0; j < kBoardHeight; j++) {

@@ -28,8 +28,10 @@ namespace myapp {
         ///new stuff
         tetris::Pieces pieces = tetris::Pieces();
         tetris::Board board = tetris::Board(800);
-        game_engine = tetris::GameEngine(board, 800);
+        game_engine = tetris::GameEngine(board);
         state_ = GameState::kPlaying;
+
+        //TODO: start music and clock
 
 
 
@@ -37,11 +39,29 @@ namespace myapp {
     void MyApp::update() { }
     void MyApp::draw() {
         cinder::gl::clear(cinder::Color(84 / 255., 166. / 255, 1));
-        cinder::gl::drawSolidCircle(cinder::vec2(getWindowCenter()), mRadius);
+        cinder::vec2 mx1 = (getWindowCenter());
+        cinder::gl::drawSolidCircle(mx1, mRadius);
+        cinder::gl::drawSolidRect(cinder::Rectf(tetris::kBoardLineWidth * 40, tetris::kBoardLineWidth * 40,
+                tetris::kBoardLineWidth * 40 + tile_size_, tetris::kBoardLineWidth * 40 + tile_size_));
+        DrawBoard();
         gui->draw();
     }
 
     void MyApp::DrawBoard() const {
+        // TODO: draw rectangles that limit the board, draw already placed blocks
+        // board limit rectangle to the left
+        cinder::gl::color(.2, .2, .1);
+
+        int x_int_left_ = 400 - (tetris::kBlockSize * (tetris::kBoardWidth / 2)) - 1;
+        int x_int_right_ = 400 + (tetris::kBlockSize * (tetris::kBoardWidth / 2));
+        int m_y = game_engine.board.GetScreenHeight() - (tetris::kBlockSize * tetris::kBoardHeight);
+        // left
+        cinder::gl::drawSolidRect(cinder::Rectf(x_int_left_, m_y, x_int_left_ + tetris::kBoardLineWidth,
+                game_engine.board.GetScreenHeight() - 1));
+        // right
+        cinder::gl::drawSolidRect(cinder::Rectf(x_int_right_, m_y, x_int_right_ + tetris::kBoardLineWidth,
+                                                game_engine.board.GetScreenHeight() - 1));
+
 
     }
 
@@ -53,7 +73,55 @@ namespace myapp {
 
     }
     void MyApp::keyDown(KeyEvent event) {
-
+        switch (event.getCode()) {
+            case KeyEvent::KEY_UP:
+            case KeyEvent::KEY_k:
+            case KeyEvent::KEY_w: {
+                break;
+            }
+            case KeyEvent::KEY_DOWN:
+            case KeyEvent::KEY_j:
+            case KeyEvent::KEY_s: {
+                if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x, game_engine.falling_piece_y + 1,
+                                                         game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
+                    game_engine.falling_piece_y++;
+                }
+                break;
+            }
+            case KeyEvent::KEY_LEFT:
+            case KeyEvent::KEY_h:
+            case KeyEvent::KEY_a: {
+                if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x - 1, game_engine.falling_piece_y,
+                                                         game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
+                    game_engine.falling_piece_x--;
+                }
+                break;
+            }
+            case KeyEvent::KEY_RIGHT:
+            case KeyEvent::KEY_l:
+            case KeyEvent::KEY_d: {
+                if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x + 1, game_engine.falling_piece_y,
+                        game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
+                    game_engine.falling_piece_x++;
+                }
+                break;
+            }
+            case KeyEvent::KEY_p: {
+                break;
+            }
+            case KeyEvent::KEY_r: {
+                break;
+            }
+            case KeyEvent::KEY_q: {
+                break;
+            }
+            case KeyEvent::KEY_SPACE: {
+                if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x, game_engine.falling_piece_y,
+                        game_engine.falling_piece_type, (game_engine.falling_piece_rotation + 1) % kNumRotations))
+                    game_engine.falling_piece_rotation = (game_engine.falling_piece_rotation + 1) % kNumRotations;
+                break;
+            }
+        }
     }
 
 }  // namespace myapp

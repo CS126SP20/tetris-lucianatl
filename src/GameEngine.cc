@@ -11,7 +11,6 @@ namespace  tetris {
     GameEngine::GameEngine(Board board) {
         this->board = board;
 
-
         // First piece
         falling_piece_type = piece_type_array[GetRandomInt(0, 6)];
         falling_piece_rotation = GetRandomInt(0, 3);
