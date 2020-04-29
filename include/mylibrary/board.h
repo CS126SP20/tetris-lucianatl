@@ -9,14 +9,14 @@
 namespace tetris {
 
 
-    const int kBlockSize = 16;
+    const int kBlockSize = 32;
     // board width in blocks
     const int kBoardWidth = 10;
     // board height in blocks
     const int kBoardHeight = 20;
 
     // size of the tetris environment border
-    const int kBoardLineWidth = 6;
+    const int kBoardLineWidth = 32;
     // Center position of the board from the left of the screen
     const int kBoardMiddle = 320;
 
@@ -54,8 +54,6 @@ namespace tetris {
         int board[kBoardWidth][kBoardHeight];
 
         int kScreenHeight;
-
-
 
         /** fills board with frees**/
         void FillBoard();

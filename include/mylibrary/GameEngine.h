@@ -32,24 +32,22 @@ namespace tetris {
 
         Board board;
 
-
-    private:
-        /// x postion of the next piece
-        int next_piece_x;
-        ///y position of the next piece
-        int next_piece_y;
         /// type of the next piece
         char next_piece_type;
         /// rotation of the next piece
         int next_piece_rotation;
+        /// x postion of the next piece
+        int next_piece_x;
+        ///y position of the next piece
+        int next_piece_y;
+    private:
         /// screen s
-
 
         char piece_type_array[6] = {'i', 'o', 'j', 'l', 'n', 't'};
         
 
 
-        int GetRandomInt(int min, int max);
+        int GetRandomInt(int max);
         void InitGame();
         void DrawPiece(int x, int y, int piece, int rotation);
         void DrawBoard();

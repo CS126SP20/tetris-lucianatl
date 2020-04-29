@@ -30,15 +30,20 @@
             void keyDown(cinder::app::KeyEvent) override;
 
         private:
-            void DrawFallingPiece() const;
+            void DrawFallingPiece();
 
             void DrawBoard();
 
-            void DrawNextPiece() const;
+            void DrawNextPiece();
 
             float mRadius;
             const int tile_size_ = 25;
             pretzel::PretzelGuiRef gui;
+
+
+            double red = 0.1;
+            double blue = 0.2;
+            double green = 0.1;
 
 
             ///new stuff
