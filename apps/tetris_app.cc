@@ -16,7 +16,7 @@ namespace myapp {
     }
 
     void MyApp::setup() {
-        mRadius = 25;
+        mRadius = 5;
         gui = pretzel::PretzelGui::create("Tetris settings");
         gui->setSize(cinder::vec2(10, 10));
         gui->setPos(cinder::vec2(0,0));
@@ -47,7 +47,7 @@ namespace myapp {
         gui->draw();
     }
 
-    void MyApp::DrawBoard() const {
+    void MyApp::DrawBoard() {
         // TODO: draw rectangles that limit the board, draw already placed blocks
         // board limit rectangle to the left
         cinder::gl::color(.2, .2, .1);
@@ -62,7 +62,23 @@ namespace myapp {
         cinder::gl::drawSolidRect(cinder::Rectf(x_int_right_, m_y, x_int_right_ + tetris::kBoardLineWidth,
                                                 game_engine.board.GetScreenHeight() - 1));
 
+        // store peice for testing purposes
+        game_engine.board.StorePiece(0, 0, 'j', 1);
 
+        // draw existing pieces in board
+        x_int_left_ += 1;
+        for (int i = 0; i < tetris::kBoardWidth; i++) {
+            for (int j = 0; j < tetris::kBoardHeight; j++) {
+                // Check if the block is filled, if so, draw it
+                if (!game_engine.board.IsFreeBlock(i, j)) {
+                    cinder::gl::drawSolidRect(cinder::Rectf(x_int_left_ + i * tetris::kBlockSize,
+                            m_y + j * tetris::kBlockSize,
+                            (x_int_left_ + i * tetris::kBlockSize) + tetris::kBlockSize - 1,
+                            (m_y + j * tetris::kBlockSize) + tetris::kBlockSize - 1));
+
+                }
+            }
+        }
     }
 
     void MyApp::DrawFallingPiece() const {
@@ -83,7 +99,7 @@ namespace myapp {
             case KeyEvent::KEY_j:
             case KeyEvent::KEY_s: {
                 if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x, game_engine.falling_piece_y + 1,
-                                                         game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
+                        game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
                     game_engine.falling_piece_y++;
                 }
                 break;
@@ -92,7 +108,7 @@ namespace myapp {
             case KeyEvent::KEY_h:
             case KeyEvent::KEY_a: {
                 if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x - 1, game_engine.falling_piece_y,
-                                                         game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
+                        game_engine.falling_piece_type, game_engine.falling_piece_rotation)) {
                     game_engine.falling_piece_x--;
                 }
                 break;

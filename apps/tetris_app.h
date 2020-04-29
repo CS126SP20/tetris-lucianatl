@@ -32,7 +32,7 @@
         private:
             void DrawFallingPiece() const;
 
-            void DrawBoard() const;
+            void DrawBoard();
 
             void DrawNextPiece() const;
 

@@ -17,15 +17,15 @@ namespace tetris {
         /** Parameters: type: type of piece, rotation: 1-4 a possible rotation
          * x, y: xy pixel postion
          * return: 0 = no-block, 1 = normal block, 2 = pivot block **/
-        int GetBlockType  (char type, int rotation, int x, int y);
+        int GetBlockType(char type, int rotation, int x, int y);
 
         /** Parameters: type: piece to draw, rotation: 1-4, a possible rotation
          * return: horizontal displacement of piece, pixel to return the correct position**/
-        int GetXInitialPosition (int pPiece, int pRotation);
+        int GetXInitialPosition(int pPiece, int pRotation);
 
         /** Parameters: type: piece to draw, rotation: 1-4, a possible rotation
          * return: vertical displacement of piece, pixel to return the correct position**/
-        int GetYInitialPosition (int type, int rotation);
+        int GetYInitialPosition(int type, int rotation);
 
     private:
         // vector that represents the I shape tetris block, and all the ways it can turn
