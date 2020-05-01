@@ -43,12 +43,11 @@ namespace tetris {
     private:
         /// screen s
 
-        char piece_type_array[6] = {'i', 'o', 'j', 'l', 'n', 't'};
+        char piece_type_array[7] = {'i', 'o', 'j', 'l', 'n', 't', 's'};
         
 
 
         int GetRandomInt(int max);
-        void InitGame();
         void DrawPiece(int x, int y, int piece, int rotation);
         void DrawBoard();
     };

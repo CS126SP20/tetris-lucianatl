@@ -18,7 +18,7 @@ namespace tetris {
     // size of the tetris environment border
     const int kBoardLineWidth = 32;
     // Center position of the board from the left of the screen
-    const int kBoardMiddle = 320;
+    const int kBoardMiddle = 400;
 
     // Minimum vertical margin for the board limit
     const int kMinVerticalMargin = 20;
@@ -59,6 +59,7 @@ namespace tetris {
         void FillBoard();
 
         void DeleteLine(int y);
+
 
     };
 }

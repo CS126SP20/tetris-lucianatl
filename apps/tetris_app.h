@@ -30,15 +30,20 @@
             void keyDown(cinder::app::KeyEvent) override;
 
         private:
-            void DrawFallingPiece();
 
             void DrawBoard();
 
-            void DrawNextPiece();
+            void DrawPiece(char type, int rotation, int x, int y);
+
+            void DrawGameOver();
 
             float mRadius;
             const int tile_size_ = 25;
             pretzel::PretzelGuiRef gui;
+
+            cinder::Timer clock_;
+
+            double time_increments_ = 0.2;
 
 
             double red = 0.1;
@@ -55,6 +60,8 @@
 
             // state of the game
             GameState state_;
+
+            bool printed_game_over_ = false;
 
 
         };

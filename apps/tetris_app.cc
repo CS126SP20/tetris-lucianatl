@@ -8,9 +8,28 @@
 #include "mylibrary/GameEngine.h"
 
 
+#if defined(CINDER_COCOA_TOUCH)
+const char kNormalFont[] = "Arial";
+const char kBoldFont[] = "Arial-BoldMT";
+const char kDifferentFont[] = "AmericanTypewriter";
+#elif defined(CINDER_LINUX)
+const char kNormalFont[] = "Arial Unicode MS";
+const char kBoldFont[] = "Arial Unicode MS";
+const char kDifferentFont[] = "Purisa";
+#else
+const char kNormalFont[] = "Arial";
+const char kBoldFont[] = "Arial Bold";
+const char kDifferentFont[] = "Papyrus";
+#endif
+
+
+
 namespace myapp {
 
     using cinder::app::KeyEvent;
+    using cinder::TextBox;
+    using cinder::ColorA;
+    using std::string;
 
     MyApp::MyApp() {
     }
@@ -32,24 +51,63 @@ namespace myapp {
         state_ = GameState::kPlaying;
 
         //TODO: start music and clock
+        clock_.start();
 
 
 
     }
-    void MyApp::update() { }
+    void MyApp::update() {
+        if (game_engine.board.IsGameOver()) {
+            return;
+        }
+        // ----- Vertical movement -----
+
+
+        if (clock_.getSeconds() >= time_increments_) {
+            if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x,
+            game_engine.falling_piece_y + 1, game_engine.falling_piece_type,
+            game_engine.falling_piece_rotation)) {
+                game_engine.falling_piece_y++;
+                clock_.stop();
+                clock_.start();
+            }
+            else {
+                game_engine.board.StorePiece(game_engine.falling_piece_x,
+                game_engine.falling_piece_y, game_engine.falling_piece_type,
+                game_engine.falling_piece_rotation);
+
+                game_engine.board.DeletePossibleLines();
+
+                game_engine.CreateNewPiece();
+            }
+            //mTime1 = SDL_GetTicks();
+
+        }
+    }
 
     void MyApp::draw() {
-        /*cinder::gl::clear(cinder::Color(84 / 255., 166. / 255, 1));
+        /*
         cinder::vec2 mx1 = (getWindowCenter());
         cinder::gl::drawSolidCircle(mx1, mRadius);
         cinder::gl::drawSolidRect(cinder::Rectf(tetris::kBoardLineWidth * 40, tetris::kBoardLineWidth * 40,
                 tetris::kBoardLineWidth * 40 + tile_size_, tetris::kBoardLineWidth * 40 + tile_size_));*/
+        if (game_engine.board.IsGameOver()) {
+                if (!printed_game_over_) cinder::gl::clear(cinder::Color(1, 0, 0));
+                DrawGameOver();
+                return;
+            }
+        cinder::gl::clear(cinder::Color(100 / 255., 166. / 255, 1));
         DrawBoard();
-        DrawNextPiece();
+
+        DrawPiece(game_engine.falling_piece_type, game_engine.falling_piece_rotation,
+                  game_engine.board.GetXPosInPixels(game_engine.falling_piece_x),
+                  game_engine.board.GetYPosInPixels(game_engine.falling_piece_y));
         //gui->draw();
     }
 
     void MyApp::DrawBoard() {
+        DrawPiece(game_engine.next_piece_type, game_engine.next_piece_rotation,
+                  game_engine.next_piece_x, game_engine.next_piece_y);
         // TODO: draw rectangles that limit the board, draw already placed blocks
         // board limit rectangle to the left
         cinder::gl::color(.2, .2, .1);
@@ -65,7 +123,7 @@ namespace myapp {
                                                 game_engine.board.GetScreenHeight() - 1));
 
         // store piece for testing purposes
-        game_engine.board.StorePiece(0, 0, 'j', 1);
+        //game_engine.board.StorePiece(0, 0, 'j', 1);
 
         // draw existing pieces in board
         x_int_left_ += 1;
@@ -83,38 +141,77 @@ namespace myapp {
         }
     }
 
-    void MyApp::DrawFallingPiece() {
+    void MyApp::DrawGameOver() {
+        if (printed_game_over_) return;
 
+        const cinder::vec2 center = getWindowCenter();
+        const cinder::ivec2 size = {500, 50};
+        const cinder::Color color = cinder::Color::white();
+
+        size_t row = 0;
+        PrintText("Game Over :(", color, size, center);
+        for (const snake::Player& player : top_players_) {
+            std::stringstream ss;
+            ss << player.name << " - " << player.score;
+            PrintText(ss.str(), color, size, {center.x, center.y + (++row) * 50});
+        }
+        PrintText("press r to restart", color, size, {center.x, center.y + (++row) * 50});
+
+        printed_game_over_ = true;
     }
 
-    void MyApp::DrawNextPiece() {
+    template <typename C>
+    void PrintText(const string& text, const C& color, const cinder::ivec2& size,
+                   const cinder::vec2& loc) {
+        cinder::gl::color(color);
+
+        auto box = TextBox()
+                .alignment(TextBox::CENTER)
+                .font(cinder::Font(kNormalFont, 30))
+                .size(size)
+                .color(color)
+                .backgroundColor(ColorA(0, 0, 0, 0))
+                .text(text);
+
+        const auto box_size = box.getSize();
+        const cinder::vec2 locp = {loc.x - box_size.x / 2, loc.y - box_size.y / 2};
+        const auto surface = box.render();
+        const auto texture = cinder::gl::Texture::create(surface);
+        cinder::gl::draw(texture, locp);
+    }
+
+    void MyApp::DrawPiece(char type, int rotation, int x, int y) {
+
+
 
         // Travel the matrix of blocks of the piece and draw the blocks that are filled
         for (int i = 0; i < tetris::kPieceMatrixSize; i++) {
             for (int j = 0; j < tetris::kPieceMatrixSize; j++) {
                 // Get the type of the block and draw it with the correct color
-                if (game_engine.board.pieces.GetBlockType(game_engine.next_piece_type,
-                        game_engine.next_piece_rotation, j, i) == 2) {
+                if (game_engine.board.pieces.GetBlockType(type,
+                        rotation, j, i) == 2) {
                     red = 0.2;
-                    green = 0.8;
                     blue = 0.6;
+                    green = 0.8;
+
                 } else {
-                    red = 0.1;
+                    red = 0.0;
                     blue = 0.7;
-                    green = 0.7;
+                    green = 0.1;
                 }
                 cinder::gl::color(red, green, blue);
 
-                if (game_engine.board.pieces.GetBlockType(game_engine.next_piece_type,
-                        game_engine.next_piece_rotation, j, i) != 0) {
-                    cinder::gl::drawSolidRect(cinder::Rectf(game_engine.next_piece_x + i * tetris::kBlockSize,
-                            game_engine.next_piece_y + j * tetris::kBlockSize,
-                            (game_engine.next_piece_x + i * tetris::kBlockSize) + tetris::kBlockSize - 1,
-                            (game_engine.next_piece_y + j * tetris::kBlockSize) + tetris::kBlockSize - 1));
+                if (game_engine.board.pieces.GetBlockType(type,
+                        rotation, j, i) != 0) {
+                    cinder::gl::drawSolidRect(cinder::Rectf(x + i * tetris::kBlockSize,
+                            y + j * tetris::kBlockSize,
+                            (x + i * tetris::kBlockSize) + tetris::kBlockSize - 1,
+                            (y + j * tetris::kBlockSize) + tetris::kBlockSize - 1));
                 }
             }
         }
     }
+
     void MyApp::keyDown(KeyEvent event) {
         switch (event.getCode()) {
             case KeyEvent::KEY_UP:

@@ -117,6 +117,4 @@ namespace tetris {
         return ((kScreenHeight - (kBlockSize * kBoardHeight)) + (y_position * kBlockSize));
     }
 
-
-
 }

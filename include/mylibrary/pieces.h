@@ -21,11 +21,11 @@ namespace tetris {
 
         /** Parameters: type: piece to draw, rotation: 1-4, a possible rotation
          * return: horizontal displacement of piece, pixel to return the correct position**/
-        int GetXInitialPosition(int pPiece, int pRotation);
+        int GetXInitialPosition(char type, int rotation);
 
         /** Parameters: type: piece to draw, rotation: 1-4, a possible rotation
          * return: vertical displacement of piece, pixel to return the correct position**/
-        int GetYInitialPosition(int type, int rotation);
+        int GetYInitialPosition(char type, int rotation);
 
     private:
         // vector that represents the I shape tetris block, and all the ways it can turn
@@ -253,59 +253,54 @@ namespace tetris {
                                 {0, 0, 0, 0, 0}
                         }
                 };
-
-        // Displacement of the piece to the position where it is first drawn in the board when it is created
-        int piece_displacement_matrices[7 /*kind */ ][4 /* r2otation */ ][2 /* position */] =
+        int initial_position_o[4][2] =
                 {
-                        /* Square */
-                        {
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -3}
-                        },
-                        /* I */
-                        {
-                                {-2, -2},
-                                {-2, -3},
-                                {-2, -2},
-                                {-2, -3}
-                        },
-                        /* L */
-                        {
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -2}
-                        },
-                        /* L mirrored */
-                        {
-                                {-2, -3},
-                                {-2, -2},
-                                {-2, -3},
-                                {-2, -3}
-                        },
-                        /* N */
-                        {
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -2}
-                        },
-                        /* N mirrored */
-                        {
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -2}
-                        },
-                        /* T */
-                        {
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -3},
-                                {-2, -2}
-                        },
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -3}
+                };
+        int initial_position_i[4][2] =
+                {
+                        {-2, -2},
+                        {-2, -3},
+                        {-2, -2},
+                        {-2, -3}
+                };
+        int initial_position_l[4][2] =
+                {
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -2}
+                };
+        int initial_position_j[4][2] =
+                {
+                        {-2, -3},
+                        {-2, -2},
+                        {-2, -3},
+                        {-2, -3}
+                };
+        int initial_position_n[4][2] =
+                {
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -2}
+                };
+        int initial_position_s[4][2] =
+                {
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -2}
+                };
+        int initial_position_t[4][2] =
+                {
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -3},
+                        {-2, -2}
                 };
     };
 
