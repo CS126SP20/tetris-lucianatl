@@ -54,8 +54,8 @@ namespace tetris {
     void Board::DeleteLine(int y) {
         // Moves all the upper lines one row down
         for (int j = y; j > 0; j--) {
-            for (auto & i : board) {
-                i[j] = i[j-1];
+            for (int i = 0; i < kBoardWidth; i++) {
+                board[i][j] = board[i][j-1];
             }
         }
     }
@@ -64,10 +64,10 @@ namespace tetris {
         for (int j = 0; j < kBoardHeight; j++) {
             for (int i = 0; i < kBoardWidth; i++) {
                 if (board[i][j] != filled) {
-                    if (i == kBoardWidth) {
-                        DeleteLine(j);
-                    }
                     break;
+                }
+                if (i == kBoardWidth) {
+                    DeleteLine(j);
                 }
             }
         }

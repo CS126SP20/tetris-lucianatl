@@ -12,6 +12,11 @@
 ##
 4/24/20
 - finished board class, working on game engine class.
+##
+4/25/20-4/27/20
+- Finished game engine class, ran into duplicate symbol error
+
+
 
 
 

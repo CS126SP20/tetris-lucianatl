@@ -7,7 +7,7 @@
 #include "pretzel/PretzelGui.h"
 #include "mylibrary/GameEngine.h"
 
-
+// from snake project CS 126
 #if defined(CINDER_COCOA_TOUCH)
 const char kNormalFont[] = "Arial";
 const char kBoldFont[] = "Arial-BoldMT";
@@ -95,7 +95,8 @@ namespace myapp {
                 if (!printed_game_over_) cinder::gl::clear(cinder::Color(1, 0, 0));
                 DrawGameOver();
                 return;
-            }
+        }
+
         cinder::gl::clear(cinder::Color(100 / 255., 166. / 255, 1));
         DrawBoard();
 
@@ -140,26 +141,7 @@ namespace myapp {
             }
         }
     }
-
-    void MyApp::DrawGameOver() {
-        if (printed_game_over_) return;
-
-        const cinder::vec2 center = getWindowCenter();
-        const cinder::ivec2 size = {500, 50};
-        const cinder::Color color = cinder::Color::white();
-
-        size_t row = 0;
-        PrintText("Game Over :(", color, size, center);
-        for (const snake::Player& player : top_players_) {
-            std::stringstream ss;
-            ss << player.name << " - " << player.score;
-            PrintText(ss.str(), color, size, {center.x, center.y + (++row) * 50});
-        }
-        PrintText("press r to restart", color, size, {center.x, center.y + (++row) * 50});
-
-        printed_game_over_ = true;
-    }
-
+    // from snake project CS 126
     template <typename C>
     void PrintText(const string& text, const C& color, const cinder::ivec2& size,
                    const cinder::vec2& loc) {
@@ -179,6 +161,22 @@ namespace myapp {
         const auto texture = cinder::gl::Texture::create(surface);
         cinder::gl::draw(texture, locp);
     }
+
+    void MyApp::DrawGameOver() {
+        if (printed_game_over_) return;
+
+        const cinder::vec2 center = getWindowCenter();
+        const cinder::ivec2 size = {500, 50};
+        const cinder::Color color = cinder::Color::white();
+
+        size_t row = 0;
+        PrintText("Game Over :(", color, size, center);
+        PrintText("press r to restart", color, size, {center.x, center.y + (++row) * 50});
+
+        printed_game_over_ = true;
+    }
+
+
 
     void MyApp::DrawPiece(char type, int rotation, int x, int y) {
 
@@ -214,11 +212,6 @@ namespace myapp {
 
     void MyApp::keyDown(KeyEvent event) {
         switch (event.getCode()) {
-            case KeyEvent::KEY_UP:
-            case KeyEvent::KEY_k:
-            case KeyEvent::KEY_w: {
-                break;
-            }
             case KeyEvent::KEY_DOWN:
             case KeyEvent::KEY_j:
             case KeyEvent::KEY_s: {
@@ -255,6 +248,9 @@ namespace myapp {
             case KeyEvent::KEY_q: {
                 break;
             }
+            case KeyEvent::KEY_k:
+            case KeyEvent::KEY_w:
+            case KeyEvent::KEY_UP:
             case KeyEvent::KEY_SPACE: {
                 if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x, game_engine.falling_piece_y,
                         game_engine.falling_piece_type, (game_engine.falling_piece_rotation + 1) % kNumRotations))

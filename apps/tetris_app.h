@@ -43,7 +43,7 @@
 
             cinder::Timer clock_;
 
-            double time_increments_ = 0.2;
+            double time_increments_ = 0.5;
 
 
             double red = 0.1;
