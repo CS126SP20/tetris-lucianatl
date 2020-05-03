@@ -6,6 +6,7 @@
 //#include <mylibrary/board.h>
 #include "pretzel/PretzelGui.h"
 #include "mylibrary/GameEngine.h"
+#include <iostream>
 
 // from snake project CS 126
 #if defined(CINDER_COCOA_TOUCH)
@@ -95,18 +96,22 @@ namespace myapp {
         if (game_engine.board.IsGameOver()) {
             if (!has_printed_game_over_) {
                 cinder::gl::clear(cinder::ColorA(11 / 255.0, 204 / 255.0, 233 / 255.0, mRadius));
+
             }
             DrawGameOver();
             return;
 
         }
         if (is_paused_) {
-            cinder::gl::clear(cinder::ColorA(0, 0.5, 0.4, mRadius));
+            cinder::gl::clear(cinder::ColorA(0, mRadius * 0.5, mRadius * 0.4, 1));
+
             DrawPaused();
             return;
         }
 
-        cinder::gl::clear(cinder::ColorA(11 / 255.0, 204 / 255.0, 233 / 255.0, mRadius));
+        cinder::gl::clear(cinder::ColorA(mRadius * (11 / 255.0),
+                mRadius * (204 / 255.0), mRadius * (233 / 255.0), 0.1));
+
         DrawBoard();
 
         DrawPiece(game_engine.falling_piece_type, game_engine.falling_piece_rotation,
@@ -136,7 +141,8 @@ namespace myapp {
 
         // store piece for testing purposes
         //game_engine.board.StorePiece(0, 0, 'j', 1);
-
+        color = cinder::ColorA(red, green, blue, 1);
+        cinder::gl::color(color);
         // draw existing pieces in board
         x_int_left_ += 1 + tetris::kBlockSize;
         for (int i = 0; i < tetris::kBoardWidth; i++) {
@@ -186,7 +192,6 @@ namespace myapp {
         PrintText("Game Over :(", color, size, center);
         PrintText("final score: " + std::to_string(game_engine.board.score_),
                   color, size, {center.x, center.y + (++row) * 50});
-        PrintText("press r to restart", color, size, {center.x, center.y + (++row) * 50});
 
         has_printed_game_over_ = true;
     }
@@ -198,25 +203,15 @@ namespace myapp {
         for (int i = 0; i < tetris::kPieceMatrixSize; i++) {
             for (int j = 0; j < tetris::kPieceMatrixSize; j++) {
                 // Get the type of the block and draw it with the correct color
-                if (game_engine.board.pieces.GetBlockType(type,
-                                                          rotation, j, i) == 2) {
-                    red = 0.2;
-                    blue = 0.6;
-                    green = 0.8;
 
-                } else {
-                    red = 0.0;
-                    blue = 0.7;
-                    green = 0.1;
-                }
-                ci::ColorA color = cinder::ColorA(red, green, blue, mRadius);
+                ci::ColorA color = cinder::ColorA(red, green, blue, 1);
                 cinder::gl::color(color);
                 if (game_engine.board.pieces.GetBlockType(type,
                                                           rotation, j, i) != 0) {
                     cinder::gl::drawSolidRect(cinder::Rectf(x + i * tetris::kBlockSize,
-                                                            y + j * tetris::kBlockSize,
-                                                            (x + i * tetris::kBlockSize) + tetris::kBlockSize - 1,
-                                                            (y + j * tetris::kBlockSize) + tetris::kBlockSize - 1));
+                        y + j * tetris::kBlockSize,
+                        (x + i * tetris::kBlockSize) + tetris::kBlockSize - 1,
+                        (y + j * tetris::kBlockSize) + tetris::kBlockSize - 1));
                 }
             }
         }

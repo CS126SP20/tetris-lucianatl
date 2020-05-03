@@ -54,9 +54,7 @@
             double blue = 0.2;
             double green = 0.1;
 
-            char piece_type_array[7] = {'i', 'o', 'j', 'l', 'n', 't', 's'};
 
-            ci::ColorA color = cinder::ColorA(0.2, 0.2, 0.1, 1);
 
             ///new stuff
             // game engine that will run the whole game
