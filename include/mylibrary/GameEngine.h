@@ -14,7 +14,7 @@ namespace tetris {
 
     class GameEngine {
     public:
-        /// constructor, sets board peices to instance variables and sets screen height to namespace variable
+        /// constructor, sets board pieces to instance variables and sets screen height to namespace variable
         GameEngine(Board board);
 
         GameEngine();
@@ -43,13 +43,11 @@ namespace tetris {
     private:
         /// screen s
 
-        char piece_type_array[7] = {'i', 'o', 'j', 'l', 'n', 't', 's'};
-        
 
+
+        char piece_type_array[7] = {'i', 'o', 'j', 'l', 'n', 't', 's'};
 
         int GetRandomInt(int max);
-        void DrawPiece(int x, int y, int piece, int rotation);
-        void DrawBoard();
     };
 
 }

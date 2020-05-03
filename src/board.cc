@@ -62,13 +62,37 @@ namespace tetris {
     // double check to make sure this works
     void Board::DeletePossibleLines() {
         for (int j = 0; j < kBoardHeight; j++) {
+            int the_int = 0;
             for (int i = 0; i < kBoardWidth; i++) {
                 if (board[i][j] != filled) {
                     break;
                 }
-                if (i == kBoardWidth) {
-                    DeleteLine(j);
-                }
+                the_int = i;
+            }
+            int deleted_counter_ = 0 ;
+
+            if (the_int == kBoardWidth - 1) {
+                deleted_counter_++;
+                DeleteLine(j);
+            }
+            // add points
+            switch(deleted_counter_) {
+                case 0 :
+                    break;
+                case 1 :
+                    score_ += 40;
+                    break;
+                case 2 :
+                    score_ += 100;
+                    break;
+                case 3 :
+                    score_ += 300;
+                    break;
+                case 4 :
+                    score_ += 1200;
+                    break;
+                default :
+                    score_ += 1200;;
             }
         }
     }

@@ -44,6 +44,8 @@ namespace tetris {
         int GetScreenHeight() const;
         Pieces pieces = Pieces();
 
+        int score_ = 0;
+
     private:
         enum {
             free,

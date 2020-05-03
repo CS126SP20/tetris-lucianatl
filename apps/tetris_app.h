@@ -31,6 +31,8 @@
 
         private:
 
+            void DrawScore();
+
             void DrawBoard();
 
             void DrawPiece(char type, int rotation, int x, int y);
@@ -49,6 +51,7 @@
             double red = 0.1;
             double blue = 0.2;
             double green = 0.1;
+
 
 
             ///new stuff

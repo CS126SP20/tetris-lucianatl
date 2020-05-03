@@ -42,8 +42,8 @@ namespace myapp {
         gui->addSlider("Tetris Size", &mRadius, 2, 1000);
         gui->addSaveLoad();
         gui->loadSettings();
-        ci::gl::enableAlphaBlending();*/
-
+        ci::gl::enableAlphaBlending();
+*/
         ///new stuff
         tetris::Pieces pieces = tetris::Pieces();
         tetris::Board board = tetris::Board(800);
@@ -103,6 +103,7 @@ namespace myapp {
         DrawPiece(game_engine.falling_piece_type, game_engine.falling_piece_rotation,
                   game_engine.board.GetXPosInPixels(game_engine.falling_piece_x),
                   game_engine.board.GetYPosInPixels(game_engine.falling_piece_y));
+
         //gui->draw();
     }
 
@@ -113,7 +114,7 @@ namespace myapp {
         // board limit rectangle to the left
         cinder::gl::color(.2, .2, .1);
 
-        int x_int_left_ = 400 - (tetris::kBlockSize * (tetris::kBoardWidth / 2)) - 1;
+        int x_int_left_ = 400 - (tetris::kBlockSize * (tetris::kBoardWidth / 2)) - 1 - tetris::kBlockSize;
         int x_int_right_ = 400 + (tetris::kBlockSize * (tetris::kBoardWidth / 2));
         int m_y = game_engine.board.GetScreenHeight() - (tetris::kBlockSize * tetris::kBoardHeight);
         // left
@@ -127,7 +128,7 @@ namespace myapp {
         //game_engine.board.StorePiece(0, 0, 'j', 1);
 
         // draw existing pieces in board
-        x_int_left_ += 1;
+        x_int_left_ += 1 + tetris::kBlockSize;
         for (int i = 0; i < tetris::kBoardWidth; i++) {
             for (int j = 0; j < tetris::kBoardHeight; j++) {
                 // Check if the block is filled, if so, draw it
@@ -140,6 +141,7 @@ namespace myapp {
                 }
             }
         }
+        DrawScore();
     }
     // from snake project CS 126
     template <typename C>
@@ -171,6 +173,8 @@ namespace myapp {
 
         size_t row = 0;
         PrintText("Game Over :(", color, size, center);
+        PrintText("final score: " + std::to_string(game_engine.board.score_),
+                color, size, {center.x, center.y + (++row) * 50});
         PrintText("press r to restart", color, size, {center.x, center.y + (++row) * 50});
 
         printed_game_over_ = true;
@@ -179,8 +183,6 @@ namespace myapp {
 
 
     void MyApp::DrawPiece(char type, int rotation, int x, int y) {
-
-
 
         // Travel the matrix of blocks of the piece and draw the blocks that are filled
         for (int i = 0; i < tetris::kPieceMatrixSize; i++) {
@@ -258,6 +260,17 @@ namespace myapp {
                 break;
             }
         }
+    }
+
+    void MyApp::DrawScore() {
+
+        const cinder::vec2 center = getWindowCenter();
+        const cinder::ivec2 size = {500, 50};
+        const cinder::Color color = cinder::Color::white();
+
+        PrintText(std::to_string(game_engine.board.score_), color, size, {700, 100});
+        //PrintText("press r to restart", color, size, {center.x, center.y + (++row) * 50});
+
     }
 
 }  // namespace myapp
