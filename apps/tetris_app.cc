@@ -58,11 +58,10 @@ namespace myapp {
     }
 
     void MyApp::update() {
-        if (game_engine.board.IsGameOver() || is_paused_) {
+        if (game_engine.board.IsGameOver() || is_paused_ || is_on_starting_page_) {
             return;
         }
         // ----- Vertical movement -----
-
 
         if (clock_.getSeconds() >= time_increments_) {
             if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x,
@@ -87,12 +86,12 @@ namespace myapp {
     }
 
     void MyApp::draw() {
-
-        /*
-        cinder::vec2 mx1 = (getWindowCenter());
-        cinder::gl::drawSolidCircle(mx1, mRadius);
-        cinder::gl::drawSolidRect(cinder::Rectf(tetris::kBoardLineWidth * 40, tetris::kBoardLineWidth * 40,
-                tetris::kBoardLineWidth * 40 + tile_size_, tetris::kBoardLineWidth * 40 + tile_size_));*/
+        if (is_on_starting_page_) {
+            cinder::gl::clear(cinder::ColorA(mRadius * (11 / 255.0),
+                                             mRadius * (204 / 255.0), mRadius * (233 / 255.0), 0.1));
+            DrawStart();
+            return;
+        }
         if (game_engine.board.IsGameOver()) {
             if (!has_printed_game_over_) {
                 cinder::gl::clear(cinder::ColorA(11 / 255.0, 204 / 255.0, 233 / 255.0, mRadius));
@@ -204,7 +203,8 @@ namespace myapp {
             for (int j = 0; j < tetris::kPieceMatrixSize; j++) {
                 // Get the type of the block and draw it with the correct color
 
-                ci::ColorA color = cinder::ColorA(red, green, blue, 1);
+                ci::ColorA color = cinder::ColorA(red * ( 1.0 - mRadius), green * ( 1.0 - mRadius),
+                        blue * ( 1.0 - mRadius), 1);
                 cinder::gl::color(color);
                 if (game_engine.board.pieces.GetBlockType(type,
                                                           rotation, j, i) != 0) {
@@ -253,7 +253,8 @@ namespace myapp {
             case KeyEvent::KEY_r: {
                 break;
             }
-            case KeyEvent::KEY_q: {
+            case KeyEvent::KEY_RETURN: {
+                is_on_starting_page_ = false;
                 break;
             }
             case KeyEvent::KEY_k:
@@ -295,6 +296,18 @@ namespace myapp {
 
         gui->draw();
 
+    }
+
+    void MyApp::DrawStart() {
+        const cinder::vec2 center = getWindowCenter();
+        const cinder::ivec2 size = {500, 50};
+        const cinder::Color color = cinder::Color::white();
+
+        size_t row = 0;
+
+        PrintText("Tetris", color, size, center);
+        PrintText("Press enter to begin", color, size, {center.x, center.y + (++row) * 50});
+        PrintText("by Luciana Toledo-Lopez", color, size, {center.x, center.y + (++row) * 50});
     }
 }
 // namespace myapp

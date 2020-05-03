@@ -41,6 +41,8 @@
 
             void DrawPaused();
 
+            void DrawStart();
+
             float mRadius = 1;
             const int tile_size_ = 25;
             pretzel::PretzelGuiRef gui;
@@ -50,11 +52,9 @@
             double time_increments_ = 0.5;
 
 
-            double red = 0.1;
-            double blue = 0.2;
-            double green = 0.1;
-
-
+            double red = 235/ 255.0;
+            double blue = 197 / 255.0 ;
+            double green = 223 / 255.0;
 
             ///new stuff
             // game engine that will run the whole game
@@ -70,6 +70,7 @@
 
             bool is_paused_ = false;
 
+            bool is_on_starting_page_ = true;
 
         };
         }
