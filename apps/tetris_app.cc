@@ -49,7 +49,6 @@ namespace myapp {
         tetris::Pieces pieces = tetris::Pieces();
         tetris::Board board = tetris::Board(800);
         game_engine = tetris::GameEngine(board);
-        state_ = GameState::kPlaying;
 
         tetris_logo_ = cinder::gl::Texture2d::create(
                 cinder::loadImage( loadAsset( "linee-demo.regular-1.png" ) ));

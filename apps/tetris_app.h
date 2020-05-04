@@ -10,23 +10,21 @@
 
 
     namespace myapp {
-        // used to describe the state of the game
-        enum class GameState {
-            kPlaying,
-            kGameOver,
-            kGamePaused
-        };
 
         class MyApp : public cinder::app::App {
         public:
-            MyApp();
 
+            MyApp();
+            /// sets up gui slider, starts timer for falling pieces, initializes game_engine
             void setup() override;
 
+            /// returns if on a static page, otherwise proceeds with game fucntions
             void update() override;
 
+            /// calls the appropriate drawing functions based on game state evaualted by bools is_paused,
+            /// is_on_starting page
             void draw() override;
-
+            ///
             void keyDown(cinder::app::KeyEvent) override;
 
         private:
@@ -62,9 +60,6 @@
 
             // upper bound for random rotation number
             int kNumRotations = 4;
-
-            // state of the game
-            GameState state_;
 
             bool has_printed_game_over_ = false;
 

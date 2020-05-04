@@ -134,7 +134,7 @@ namespace tetris {
     }
 
     int Board::GetXPosInPixels(int x_position) {
-        return  ((kBoardMiddle - (kBlockSize * (kBoardWidth / 2)) ) + (x_position * kBlockSize));
+        return  ((kBoardMiddle - (kBlockSize * (kBoardWidth / 2))) + (x_position * kBlockSize));
     }
 
     int Board::GetYPosInPixels (int y_position) {

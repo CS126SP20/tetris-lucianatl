@@ -39,33 +39,16 @@ TEST_CASE("GetInitialPosition test", "[GameEngine]") {
 }
 
 
-
-TEST_CASE("GetInitialPosition test", "[GameEngine]") {
+TEST_CASE("GetPosInPixels test", "[Board]") {
     tetris::Board board = tetris::Board(800);
-    tetris::GameEngine engine = tetris::GameEngine(board);
-    char old_next_type = engine.next_piece_type;
-    int old_next_rotation = engine.next_piece_rotation;
-    int old_next_x = engine.next_piece_x;
-    int old_next_y = engine.next_piece_y;
-    engine.CreateNewPiece();
-    REQUIRE(engine.falling_piece_type == old_next_type);
-    REQUIRE(engine.falling_piece_rotation == old_next_rotation);
-    REQUIRE(engine.falling_piece_x == old_next_x);
-    REQUIRE(engine.falling_piece_y == old_next_y);
-
+    REQUIRE(board.GetXPosInPixels(1) == 272);
+    REQUIRE(board.GetYPosInPixels(1) == 192);
 }
 
-/**BOARD
-* Board(int screen_height);
+TEST_CASE("IsFreeBlock and StorePiece test", "[Board]") {
+    tetris::Board board = tetris::Board(800);
+    REQUIRE(board.IsFreeBlock(1, 1));
+    board.StorePiece(1,1,'o',0);
+    REQUIRE_FALSE(board.IsFreeBlock(1, 1));
+}
 
-  Board();
-
-  int GetXPosInPixels(int pPos);
-  int GetYPosInPixels(int pPos);
-  bool IsFreeBlock(int x, int y);
-  // This is just to check the 5x5 blocks of a piece with the appropriate area in the board
-  bool IsMovementPossible(int x, int y, char piece, int rotation);
-  void StorePiece(int x, int y, char piece, int rotation);
-  void DeletePossibleLines();
-  bool IsGameOver();
-  int GetScreenHeight() const; **/
