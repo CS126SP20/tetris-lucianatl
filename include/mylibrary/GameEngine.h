@@ -19,7 +19,6 @@ namespace tetris {
 
         GameEngine();
 
-        void DrawScene();
         void CreateNewPiece();
         /// x position fo the falling piece
         int falling_piece_x;
