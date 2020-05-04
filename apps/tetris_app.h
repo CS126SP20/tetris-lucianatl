@@ -72,6 +72,8 @@
 
             bool is_on_starting_page_ = true;
 
+            cinder::gl::Texture2dRef tetris_logo_;
+
         };
         }
     // namespace myapp

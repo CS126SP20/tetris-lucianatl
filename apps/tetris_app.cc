@@ -37,19 +37,22 @@ namespace myapp {
 
     void MyApp::setup() {
 
-            gui = pretzel::PretzelGui::create("Tetris settings");
-            gui->setSize(cinder::vec2(10, 10));
-            gui->setPos(cinder::vec2(400,0));
-            gui->addSlider("Tetris color", &mRadius, 0.001, 1.0);
-            gui->addSaveLoad();
-            gui->loadSettings();
-            ci::gl::enableAlphaBlending();
+        gui = pretzel::PretzelGui::create("Brightness settings");
+        gui->setSize(cinder::vec2(10, 10));
+        gui->setPos(cinder::vec2(400,0));
+        gui->addSlider("Tetris color", &mRadius, 0.001, 1.0);
+        gui->addSaveLoad();
+        gui->loadSettings();
+        ci::gl::enableAlphaBlending();
 
         ///new stuff
         tetris::Pieces pieces = tetris::Pieces();
         tetris::Board board = tetris::Board(800);
         game_engine = tetris::GameEngine(board);
         state_ = GameState::kPlaying;
+
+        tetris_logo_ = cinder::gl::Texture2d::create(
+                cinder::loadImage( loadAsset( "linee-demo.regular-1.png" ) ));
 
         //TODO: start music and clock
         clock_.start();
@@ -140,7 +143,8 @@ namespace myapp {
 
         // store piece for testing purposes
         //game_engine.board.StorePiece(0, 0, 'j', 1);
-        color = cinder::ColorA(red, green, blue, 1);
+        color = cinder::ColorA(red * ( 1.0 - mRadius), green * ( 1.0 - mRadius),
+                                          blue * ( 1.0 - mRadius), 1);
         cinder::gl::color(color);
         // draw existing pieces in board
         x_int_left_ += 1 + tetris::kBlockSize;
@@ -305,9 +309,10 @@ namespace myapp {
 
         size_t row = 0;
 
-        PrintText("Tetris", color, size, center);
-        PrintText("Press enter to begin", color, size, {center.x, center.y + (++row) * 50});
-        PrintText("by Luciana Toledo-Lopez", color, size, {center.x, center.y + (++row) * 50});
+        //PrintText("Tetris", color, size, center);
+        cinder::gl::draw( tetris_logo_, {225, 200});
+        PrintText("Press enter to begin", color, {size.x - 50 , size.y}, {center.x, center.y + (++row) * 50});
+        PrintText("by Luciana Toledo-Lopez", color, size, {center.x, center.y + (++row) * 100});
     }
 }
 // namespace myapp
