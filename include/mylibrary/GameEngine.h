@@ -9,17 +9,17 @@
 
 namespace tetris {
 
-
-
-
     class GameEngine {
     public:
+
         /// constructor, sets board pieces to instance variables and sets screen height to namespace variable
         GameEngine(Board board);
 
         GameEngine();
 
+        /// moves next pieces variables into falling piece variables and randomly generates a new piece
         void CreateNewPiece();
+
         /// x position fo the falling piece
         int falling_piece_x;
         /// y position of the falling piece
@@ -40,12 +40,11 @@ namespace tetris {
         ///y position of the next piece
         int next_piece_y;
     private:
-        /// screen s
 
-
-
+        // all the possible shape types
         char piece_type_array[7] = {'i', 'o', 'j', 'l', 'n', 't', 's'};
 
+        /// returns a random integer between 0-max
         int GetRandomInt(int max);
     };
 

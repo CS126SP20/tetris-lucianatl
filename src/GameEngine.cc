@@ -8,6 +8,7 @@
 
 namespace tetris {
 
+    GameEngine::GameEngine() {}
 
     GameEngine::GameEngine(Board board) {
         this->board = board;
@@ -42,7 +43,5 @@ namespace tetris {
         next_piece_type = piece_type_array[GetRandomInt(6)];
         next_piece_rotation = GetRandomInt(3);
     }
-
-    GameEngine::GameEngine() {}
 
 }

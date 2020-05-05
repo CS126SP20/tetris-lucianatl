@@ -115,8 +115,8 @@ namespace myapp {
 
         // draw falling piece
         DrawPiece(game_engine.falling_piece_type, game_engine.falling_piece_rotation,
-                  game_engine.board.GetXPosInPixels(game_engine.falling_piece_x),
-                  game_engine.board.GetYPosInPixels(game_engine.falling_piece_y));
+                  game_engine.board.GetXPosInScreen(game_engine.falling_piece_x),
+                  game_engine.board.GetYPosInScreen(game_engine.falling_piece_y));
 
     }
 
@@ -126,23 +126,23 @@ namespace myapp {
         DrawPiece(game_engine.next_piece_type, game_engine.next_piece_rotation,
                   game_engine.next_piece_x, game_engine.next_piece_y);
 
-        // board limit rectangle to the left
+
         ci::ColorA color = cinder::ColorA(0.2, 0.2, 0.1, 1);
         cinder::gl::color(color);
 
         int x_int_left_ = 400 - (tetris::kBlockSize * (tetris::kBoardWidth / 2)) - 1 - tetris::kBlockSize;
         int x_int_right_ = 400 + (tetris::kBlockSize * (tetris::kBoardWidth / 2));
-        int m_y = game_engine.board.GetScreenHeight() - (tetris::kBlockSize * tetris::kBoardHeight);
+        int board_y_ = game_engine.board.GetScreenHeight() - (tetris::kBlockSize * tetris::kBoardHeight);
 
         // left border
-        cinder::gl::drawSolidRect(cinder::Rectf(x_int_left_, m_y, x_int_left_ + tetris::kBoardLineWidth,
+        cinder::gl::drawSolidRect(cinder::Rectf(x_int_left_, board_y_, x_int_left_ + tetris::kBoardLineWidth,
                                                 game_engine.board.GetScreenHeight() - 1));
         // right border
-        cinder::gl::drawSolidRect(cinder::Rectf(x_int_right_, m_y, x_int_right_ + tetris::kBoardLineWidth,
+        cinder::gl::drawSolidRect(cinder::Rectf(x_int_right_, board_y_, x_int_right_ + tetris::kBoardLineWidth,
                                                 game_engine.board.GetScreenHeight() - 1));
 
-        color = cinder::ColorA(red * (1.0 - color_scalar_), green * (1.0 - color_scalar_),
-                                          blue * (1.0 - color_scalar_), 1);
+        color = cinder::ColorA(kRed * (1.0 - color_scalar_), kGreen * (1.0 - color_scalar_),
+                               kBlue * (1.0 - color_scalar_), 1);
         cinder::gl::color(color);
 
         // draw existing pieces in board
@@ -155,9 +155,9 @@ namespace myapp {
                 if (!game_engine.board.IsFreeBlock(i, j)) {
 
                     cinder::gl::drawSolidRect(cinder::Rectf(x_int_left_ + i * tetris::kBlockSize,
-                            m_y + j * tetris::kBlockSize,
+                            board_y_ + j * tetris::kBlockSize,
                             (x_int_left_ + i * tetris::kBlockSize) + tetris::kBlockSize - 1,
-                            (m_y + j * tetris::kBlockSize) + tetris::kBlockSize - 1));
+                            (board_y_ + j * tetris::kBlockSize) + tetris::kBlockSize - 1));
 
                 }
             }
@@ -209,8 +209,8 @@ namespace myapp {
             for (int j = 0; j < tetris::kPieceMatrixSize; j++) {
                 // Get the type of the block and draw it with the correct color
 
-                ci::ColorA color = cinder::ColorA(red * (1.0 - color_scalar_), green * (1.0 - color_scalar_),
-                        blue * (1.0 - color_scalar_), 1);
+                ci::ColorA color = cinder::ColorA(kRed * (1.0 - color_scalar_), kGreen * (1.0 - color_scalar_),
+                                                  kBlue * (1.0 - color_scalar_), 1);
                 cinder::gl::color(color);
                 if (game_engine.board.pieces.GetBlockType(type,
                                                           rotation, j, i) != 0) {
@@ -221,6 +221,47 @@ namespace myapp {
                 }
             }
         }
+    }
+
+    void MyApp::DrawScore() {
+
+        const cinder::vec2 center = getWindowCenter();
+        const cinder::ivec2 size = {500, 50};
+        const cinder::Color color = cinder::Color::white();
+
+        PrintText(std::to_string(game_engine.board.score_), color, size, {700, 100});
+
+    }
+
+    void MyApp::DrawPaused() {
+
+        const cinder::vec2 center = getWindowCenter();
+        const cinder::ivec2 size = {500, 50};
+        const cinder::Color color = cinder::Color::white();
+
+        size_t row = 0;
+
+        PrintText("Game Paused", color, size, center);
+        PrintText("down, j, s keys to move down", color, size, {center.x, center.y + (++row) * 50});
+        PrintText("up, k, w keys and space bar to rotate", color, size, {center.x, center.y + (++row) * 50});
+        PrintText("left, h, a keys to move left", color, size, {center.x, center.y + (++row) * 50});
+        PrintText("right, l, d keys to move right", color, size, {center.x, center.y + (++row) * 50});
+
+        color_slider->draw();
+
+    }
+
+    void MyApp::DrawStart() {
+        const cinder::vec2 center = getWindowCenter();
+        const cinder::ivec2 size = {500, 50};
+        const cinder::Color color = cinder::Color::white();
+
+        size_t row = 0;
+
+        cinder::gl::draw( tetris_logo_, {225, 200});
+        PrintText("Press enter to begin", color, {size.x - 50 , size.y},
+                  {center.x, center.y + (++row) * 50});
+        PrintText("by Luciana Toledo-López", color, size, {center.x, center.y + (++row) * 100});
     }
 
     void MyApp::keyDown(KeyEvent event) {
@@ -268,52 +309,16 @@ namespace myapp {
             case KeyEvent::KEY_UP:
             case KeyEvent::KEY_SPACE: {
                 if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x, game_engine.falling_piece_y,
-                        game_engine.falling_piece_type, (game_engine.falling_piece_rotation + 1) % kNumRotations))
+                        game_engine.falling_piece_type,
+                        (game_engine.falling_piece_rotation + 1) % kNumRotations)) {
                     game_engine.falling_piece_rotation = (game_engine.falling_piece_rotation + 1) % kNumRotations;
+                }
+
                 break;
             }
         }
     }
 
-    void MyApp::DrawScore() {
 
-        const cinder::vec2 center = getWindowCenter();
-        const cinder::ivec2 size = {500, 50};
-        const cinder::Color color = cinder::Color::white();
-
-        PrintText(std::to_string(game_engine.board.score_), color, size, {700, 100});
-
-    }
-
-    void MyApp::DrawPaused() {
-
-        const cinder::vec2 center = getWindowCenter();
-        const cinder::ivec2 size = {500, 50};
-        const cinder::Color color = cinder::Color::white();
-
-        size_t row = 0;
-
-        PrintText("Game Paused", color, size, center);
-        PrintText("down, j, s keys to move down", color, size, {center.x, center.y + (++row) * 50});
-        PrintText("up, k, w keys and space bar to rotate", color, size, {center.x, center.y + (++row) * 50});
-        PrintText("left, h, a keys to move left", color, size, {center.x, center.y + (++row) * 50});
-        PrintText("right, l, d keys to move right", color, size, {center.x, center.y + (++row) * 50});
-
-        color_slider->draw();
-
-    }
-
-    void MyApp::DrawStart() {
-        const cinder::vec2 center = getWindowCenter();
-        const cinder::ivec2 size = {500, 50};
-        const cinder::Color color = cinder::Color::white();
-
-        size_t row = 0;
-
-        cinder::gl::draw( tetris_logo_, {225, 200});
-        PrintText("Press enter to begin", color, {size.x - 50 , size.y},
-                {center.x, center.y + (++row) * 50});
-        PrintText("by Luciana Toledo-López", color, size, {center.x, center.y + (++row) * 100});
-    }
 }
 // namespace myapp

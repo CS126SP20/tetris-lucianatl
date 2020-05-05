@@ -62,10 +62,11 @@
                 double time_increments_ = 0.5;
 
                 /// color of the peices
-                double red = 235/ 255.0;
-                double blue = 197 / 255.0 ;
-                double green = 223 / 255.0;
+                const double kRed = 235 / 255.0;
+                const double kBlue = 197 / 255.0 ;
+                const double kGreen = 223 / 255.0;
 
+                /// the denominator for colors
                 const double kColorMax = 255.0;
 
 
@@ -73,7 +74,7 @@
                 tetris::GameEngine game_engine;
 
                 /// upper bound for random rotation number
-                int kNumRotations = 4;
+                const int kNumRotations = 4;
 
                 bool has_printed_game_over_ = false;
 

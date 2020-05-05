@@ -2,8 +2,6 @@
 
 #include "mylibrary/pieces.h"
 
-#include <map>
-#include <vector>
 
 namespace tetris {
     int Pieces::GetBlockType (char type, int rotation, int x, int y) {

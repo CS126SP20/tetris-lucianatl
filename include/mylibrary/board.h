@@ -6,61 +6,90 @@
 #define FINALPROJECT_BOARD_H
 #include "mylibrary/pieces.h"
 
+// code based on http://javilop.com/gamedev/tetris-tutorial-in-c-platform-independent-focused-in-game-logic-for-beginners/
+
 namespace tetris {
 
-
+    // size of each block
     const int kBlockSize = 32;
+
     // board width in blocks
     const int kBoardWidth = 10;
+
     // board height in blocks
     const int kBoardHeight = 20;
 
     // size of the tetris environment border
     const int kBoardLineWidth = 32;
+
     // Center position of the board from the left of the screen
     const int kBoardMiddle = 400;
 
-    // Minimum vertical margin for the board limit
-    const int kMinVerticalMargin = 20;
-    // Minimum horizontal margin for the board limit
-    const int kMinHorizontalMargin = 20;
     // size of the block def matrices
     const int kPieceMatrixSize = 5;
 
     class Board {
-    public:
-        Board(int screen_height);
+        public:
+            /// constructors, take in the screen height
+            Board(int screen_height);
 
-        Board();
+            Board();
 
-        int GetXPosInPixels(int pPos);
-        int GetYPosInPixels(int pPos);
-        bool IsFreeBlock(int x, int y);
-        // This is just to check the 5x5 blocks of a piece with the appropriate area in the board
-        bool IsMovementPossible(int x, int y, char piece, int rotation);
-        void StorePiece(int x, int y, char piece, int rotation);
-        void DeletePossibleLines();
-        bool IsGameOver();
-        int GetScreenHeight() const;
-        Pieces pieces = Pieces();
+            /// gets the position of a point relative to where the board is on the screen
+            int GetXPosInScreen(int x_position);
+            int GetYPosInScreen(int y_position);
 
-        int score_ = 0;
+            /// checks if a certain position in the board is free
+            bool IsFreeBlock(int x, int y);
 
-    private:
-        enum {
-            free,
-            filled
-        };
+            /// Returns true if the proposed position by parameters is not taken by another block or ot of the board
+            bool IsMovementPossible(int x, int y, char piece, int rotation);
 
-        /// Board that contains the pieces
-        int board[kBoardWidth][kBoardHeight];
+            /// Stores the piece given by parameters in the the board matrix at the position given by the parameters
+            void StorePiece(int x, int y, char piece, int rotation);
 
-        int kScreenHeight;
+            /// if a line is filled on the board matrix, it makes it free and moves down the lines on top
+            void DeletePossibleLines();
 
-        /** fills board with frees**/
-        void FillBoard();
+            /// Returns true if any spot on the top line is filled
+            bool IsGameOver();
 
-        void DeleteLine(int y);
+            /// getter for screen height
+            int GetScreenHeight() const;
+
+            /// pieces object
+            Pieces pieces = Pieces();
+
+            /// score of the game, will increase by 40 if one line is deleted at once,
+            int score_ = 0;
+
+        private:
+
+            /// for filling board
+            enum {
+                free,
+                filled
+            };
+
+            /// Board that contains the pieces
+            int board[kBoardWidth][kBoardHeight];
+
+            int kScreenHeight;
+
+            /// fills board with frees
+            void FillBoard();
+
+            /// called on by DeletePossibleLines() to delete the lines on the board
+            void DeleteLine(int y);
+
+            // points for each lines deleted
+            int kOneLinePoints = 40;
+
+            int kTwoLinePoints = 100;
+
+            int kThreeLinePoints = 300;
+
+            int kFourLinePoints = 1200;
 
 
     };

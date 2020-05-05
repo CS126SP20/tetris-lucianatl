@@ -7,12 +7,12 @@
 
 namespace tetris {
 
+    Board::Board() {}
+
     Board::Board(int screen_height) {
         kScreenHeight = screen_height;
         FillBoard();
     }
-
-    Board::Board() {}
 
     int Board::GetScreenHeight() const {
         return kScreenHeight;
@@ -26,13 +26,12 @@ namespace tetris {
         }
     }
 
-    // double check
     void Board::StorePiece(int x, int y, char piece, int rotation) {
         // Store each block of the piece into the board
         for (int i_board = x, i_matrix = 0; i_board < x + kPieceMatrixSize; i_board++, i_matrix++) {
             for (int j_board = y, j_matrix = 0; j_board < y + kPieceMatrixSize; j_board++, j_matrix++) {
+
                 // Store only the blocks of the piece that are not holes
-                // are the i and j backwards?
                 if (pieces.GetBlockType(piece, rotation, j_matrix, i_matrix) != 0) {
                     board[i_board][j_board] = filled;
                 }
@@ -62,16 +61,17 @@ namespace tetris {
     // double check to make sure this works
     void Board::DeletePossibleLines() {
         for (int j = 0; j < kBoardHeight; j++) {
-            int the_int = 0;
+            int row_ = 0;
             for (int i = 0; i < kBoardWidth; i++) {
                 if (board[i][j] != filled) {
                     break;
                 }
-                the_int = i;
+                row_ = i;
             }
+
             int deleted_counter_ = 0 ;
 
-            if (the_int == kBoardWidth - 1) {
+            if (row_ == kBoardWidth - 1) {
                 deleted_counter_++;
                 DeleteLine(j);
             }
@@ -80,19 +80,19 @@ namespace tetris {
                 case 0 :
                     break;
                 case 1 :
-                    score_ += 40;
+                    score_ += kOneLinePoints;
                     break;
                 case 2 :
-                    score_ += 100;
+                    score_ += kTwoLinePoints;
                     break;
                 case 3 :
-                    score_ += 300;
+                    score_ += kThreeLinePoints;
                     break;
                 case 4 :
-                    score_ += 1200;
+                    score_ += kFourLinePoints;
                     break;
                 default :
-                    score_ += 1200;;
+                    score_ += kFourLinePoints;;
             }
         }
     }
@@ -133,11 +133,11 @@ namespace tetris {
         return true;
     }
 
-    int Board::GetXPosInPixels(int x_position) {
+    int Board::GetXPosInScreen(int x_position) {
         return  ((kBoardMiddle - (kBlockSize * (kBoardWidth / 2))) + (x_position * kBlockSize));
     }
 
-    int Board::GetYPosInPixels (int y_position) {
+    int Board::GetYPosInScreen (int y_position) {
         return ((kScreenHeight - (kBlockSize * kBoardHeight)) + (y_position * kBlockSize));
     }
 

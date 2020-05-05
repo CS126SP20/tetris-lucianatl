@@ -41,8 +41,8 @@ TEST_CASE("GetInitialPosition test", "[GameEngine]") {
 
 TEST_CASE("GetPosInPixels test", "[Board]") {
     tetris::Board board = tetris::Board(800);
-    REQUIRE(board.GetXPosInPixels(1) == 272);
-    REQUIRE(board.GetYPosInPixels(1) == 192);
+    REQUIRE(board.GetXPosInScreen(1) == 272);
+    REQUIRE(board.GetYPosInScreen(1) == 192);
 }
 
 TEST_CASE("IsFreeBlock and StorePiece test", "[Board]") {
