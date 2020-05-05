@@ -32,7 +32,7 @@
             private:
 
                 /// draws the score in the upper right hand corner
-                void DrawScore();
+                void DrawScoreAndLevel();
 
                 /// draws the borders of the game as well as the stored pieces and next piece
                 void DrawBoard();
@@ -58,8 +58,11 @@
                 /// timer that lowers the falling pieces
                 cinder::Timer clock_;
 
-                /// ow much time passes between each lower of the falling piece
+                /// how much time passes between each lower of the falling piece
                 double time_increments_ = 0.5;
+
+                /// how much time reduces with each level completed
+                const double speed_multiplier_ = 0.80;
 
                 /// color of the peices
                 const double kRed = 227 / 255.0;
@@ -85,6 +88,8 @@
 
                 /// Tetris++ logo image for the start screen
                 cinder::gl::Texture2dRef tetris_logo_;
+
+                int level_ = 0;
 
             };
         }

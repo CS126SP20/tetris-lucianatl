@@ -25,7 +25,8 @@ Press Enter/Return on the starting screen and and play with the following contro
 | `↓` , `s` , `j` | Move piece down                             |
 | `p`             | pause                                       |
 
-Filling a row/line will clear it. The scoring system for the game follows the original BPS scoring system.
+Filling a row/line will clear it. The scoring system for the game follows the original BPS scoring system. 
+Points will be displayed in the upper right hand corner.
 
 | Line Clear | Points                   |
 |------------|--------------------------|
@@ -34,8 +35,12 @@ Filling a row/line will clear it. The scoring system for the game follows the or
 | 3 (triple) | 300                      |
 | 4 (tetris) | 1200                     |
 
+Any piece placed above the board will end the game.
+
 ## Credits
 
 [Tetris tutorial in C++ platform](http://javilop.com/gamedev/tetris-tutorial-in-c-platform-independent-focused-in-game-logic-for-beginners/)
+
+[CS126SP20 Snake Game App](https://github.com/CS126SP20/snake-ssuni2)
 
 **Author**: Luciana Toledo-López - [`lucianat@illinois.edu`](mailto:example@illinois.edu)

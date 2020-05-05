@@ -6,7 +6,7 @@
 #define FINALPROJECT_BOARD_H
 #include "mylibrary/pieces.h"
 
-// code based on http://javilop.com/gamedev/tetris-tutorial-in-c-platform-independent-focused-in-game-logic-for-beginners/
+//code based on http://javilop.com/gamedev/tetris-tutorial-in-c-platform-independent-focused-in-game-logic-for-beginners/
 
 namespace tetris {
 
@@ -63,6 +63,9 @@ namespace tetris {
             /// score of the game, will increase by 40 if one line is deleted at once,
             int score_ = 0;
 
+            /// returns true if number of lines that have been cleared is over
+            bool ShouldIncreaseSpeed();
+
         private:
 
             /// for filling board
@@ -90,6 +93,11 @@ namespace tetris {
             int kThreeLinePoints = 300;
 
             int kFourLinePoints = 1200;
+
+            int level_counter_ = 0;
+
+            // how many lines need to be cleared in order to increase the level
+            int increase_level_ = 10;
 
 
     };

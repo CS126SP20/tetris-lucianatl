@@ -73,6 +73,7 @@ namespace tetris {
 
             if (row_ == kBoardWidth - 1) {
                 deleted_counter_++;
+                level_counter_++;
                 DeleteLine(j);
             }
             // add points
@@ -139,6 +140,15 @@ namespace tetris {
 
     int Board::GetYPosInScreen (int y_position) {
         return ((kScreenHeight - (kBlockSize * kBoardHeight)) + (y_position * kBlockSize));
+    }
+
+    bool Board::ShouldIncreaseSpeed() {
+        //check if need to increase speed
+        if (level_counter_ >= increase_level_) {
+            level_counter_ = 0;
+            return true;
+        }
+        return false;
     }
 
 }

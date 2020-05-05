@@ -59,6 +59,10 @@ namespace myapp {
         if (game_engine.board.IsGameOver() || is_paused_ || is_on_starting_page_) {
             return;
         }
+        if(game_engine.board.ShouldIncreaseSpeed()) {
+            time_increments_ = time_increments_ * speed_multiplier_;
+            level_++;
+        }
 
         // move vertically, store piece
         if (clock_.getSeconds() >= time_increments_) {
@@ -162,7 +166,7 @@ namespace myapp {
                 }
             }
         }
-        DrawScore();
+        DrawScoreAndLevel();
     }
 
     // from snake project CS 126
@@ -223,13 +227,14 @@ namespace myapp {
         }
     }
 
-    void MyApp::DrawScore() {
+    void MyApp::DrawScoreAndLevel() {
 
         const cinder::vec2 center = getWindowCenter();
         const cinder::ivec2 size = {500, 50};
         const cinder::Color color = cinder::Color::white();
 
-        PrintText(std::to_string(game_engine.board.score_), color, size, {700, 100});
+        PrintText("score: " + std::to_string(game_engine.board.score_), color, size, {700, 100});
+        PrintText("level: " + std::to_string(level_), color, size, {700, 150});
 
     }
 
