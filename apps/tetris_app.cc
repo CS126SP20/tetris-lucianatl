@@ -39,7 +39,7 @@ namespace myapp {
         color_slider = pretzel::PretzelGui::create("Brightness settings");
         color_slider->setSize(cinder::vec2(10, 10));
         color_slider->setPos(cinder::vec2(400, 0));
-        color_slider->addSlider("Tetris color", &color_scalar_, 0.001, 1.0);
+        color_slider->addSlider("Tetris color", &color_scalar_, 0.1, 1.0);
 
         color_slider->addSaveLoad();
         color_slider->loadSettings();
@@ -127,7 +127,7 @@ namespace myapp {
                   game_engine.next_piece_x, game_engine.next_piece_y);
 
 
-        ci::ColorA color = cinder::ColorA(0.2, 0.2, 0.1, 1);
+        ci::ColorA color = cinder::ColorA(50 / kColorMax, 51 / kColorMax, 48 / kColorMax, 1);
         cinder::gl::color(color);
 
         int x_int_left_ = 400 - (tetris::kBlockSize * (tetris::kBoardWidth / 2)) - 1 - tetris::kBlockSize;
@@ -297,17 +297,13 @@ namespace myapp {
                 is_paused_ = !(is_paused_);
                 break;
             }
-            case KeyEvent::KEY_r: {
-                break;
-            }
             case KeyEvent::KEY_RETURN: {
                 is_on_starting_page_ = false;
                 break;
             }
             case KeyEvent::KEY_k:
             case KeyEvent::KEY_w:
-            case KeyEvent::KEY_UP:
-            case KeyEvent::KEY_SPACE: {
+            case KeyEvent::KEY_UP: {
                 if (game_engine.board.IsMovementPossible(game_engine.falling_piece_x, game_engine.falling_piece_y,
                         game_engine.falling_piece_type,
                         (game_engine.falling_piece_rotation + 1) % kNumRotations)) {
