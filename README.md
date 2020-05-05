@@ -20,13 +20,13 @@ Press Enter/Return on the starting screen and and play with the following contro
 | Key      | Action                                             |
 |----------|----------------------------------------------------|
 | `↑` , `k` , `w` | Rotate falling piece                        |
-| `→` , `l` , `d` | Move piece to the right					    |
-| `←` , `h` , `a` | Move piece to the left                      |
-| `↓` , `s` , `j` | Move piece down                             |
+| `→` , `l` , `d` | Move falling piece to the right					    |
+| `←` , `h` , `a` | Move falling piece to the left                      |
+| `↓` , `s` , `j` | Move falling piece down                             |
 | `p`             | pause                                       |
 
 Filling a row/line will clear it. The scoring system for the game follows the original BPS scoring system. 
-Points will be displayed in the upper right hand corner.
+Points and level will be displayed in the upper right hand corner.
 
 | Line Clear | Points                   |
 |------------|--------------------------|
