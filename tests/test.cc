@@ -3,11 +3,12 @@
 #define CATCH_CONFIG_MAIN
 
 #include <catch2/catch.hpp>
-#include <cinder/Rand.h>
 #include <mylibrary/GameEngine.h>
 
 #include "mylibrary/pieces.h"
 
+// I got a permission error which I could not get rid of whenever I wanted to run these,
+// so I was never able to run any of these tests
 
 TEST_CASE("GetBlockType test", "[pieces]") {
     tetris::Pieces piece = tetris::Pieces();

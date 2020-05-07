@@ -3,14 +3,14 @@
 
 A tetris game written in C++
 
-[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![docs](https://img.shields.io/badge/docs-yes-brightgreen)](docs/README.md)
 ![](assets/tetris_screenshot.png)
 ## Installation
 
 You will need to install [Cinder](https://libcinder.org/download).
 
-You will also need to install the external library [PretzelGui](https://github.com/cwhitney/PretzelGui).
+You will also need to install the external libraries [PretzelGui](https://github.com/cwhitney/PretzelGui)
+and [Catch2](https://github.com/catchorg/Catch2).
 
 
 ## How To Play

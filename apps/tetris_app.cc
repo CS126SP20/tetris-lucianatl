@@ -50,7 +50,7 @@ namespace myapp {
         tetris::Board board = tetris::Board(800);
         game_engine = tetris::GameEngine(board);
         tetris_logo_ = cinder::gl::Texture2d::create(
-                cinder::loadImage( loadAsset( "tetrisLogo.png" ) ));
+                cinder::loadImage( loadAsset( "tetrisLogo.png" )));
         clock_.start();
 
     }
